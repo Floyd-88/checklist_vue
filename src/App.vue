@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="checklist">
+    <div class="checklist_main">
+      <div class="checklist_header">
+        <h1 class="checklist_header_title">Список дел на сегодня!!!</h1>
+      </div>
+      <div class="checklist_list">
+        <ol class="checklist_list_ul">
+<!--          <li class="checklist_list_li"></li>-->
+        </ol>
+      </div>
+      <div class="checklist_text">
+      <textarea class="checklist_text_textarea" placeholder="Сформировать задачу..."></textarea>
+        <button class="checklist_text_btn">Добавить задачу</button>
+      </div>
+    </div>
+  </div>
+
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      
+    }
   }
+
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

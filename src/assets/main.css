@@ -1,0 +1,57 @@
+@import './base.css';
+
+body {
+    background: honeydew;
+}
+
+.checklist {
+    display: flex;
+    justify-content: center;
+}
+
+.checklist_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    padding: 10px 131px;
+    border-radius: 22px;
+    background: aliceblue;
+    box-shadow: 1px 0px 9px 2px rgb(0 0 0 / 50%);
+}
+
+.checklist_header {
+
+}
+
+.checklist_header_title {
+    font-size: 35px;
+    font-style: italic;
+    color: mediumvioletred;
+}
+
+.checklist_list {
+
+}
+
+.checklist_list_ul {
+
+}
+
+.checklist_list_li {
+
+}
+
+.checklist_text {
+    display: flex;
+    flex-direction: column;
+}
+
+.checklist_text_textarea {
+    width: 340px;
+    height: 70px;
+}
+
+.checklist_text_btn {
+    margin: 7px;
+}
