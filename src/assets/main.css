@@ -39,7 +39,13 @@ body {
 }
 
 .checklist_list_li {
+    font-size: 21px;
+    margin: 7px;
+    font-style: italic;
+}
 
+.checklist_list_li_element {
+    cursor: pointer;
 }
 
 .checklist_text {
@@ -54,4 +60,8 @@ body {
 
 .checklist_text_btn {
     margin: 7px;
+}
+
+.decoration_text {
+    text-decoration: line-through;
 }

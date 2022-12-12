@@ -7,7 +7,7 @@
       <div class="checklist_list">
         <ol class="checklist_list_ul" i-if="tasks">
           <li class="checklist_list_li" v-for="(elem, index) in tasks" :key="index">
-            {{elem}}
+            <span class="checklist_list_li_element"  @click="readyTask($event)">{{elem.name}}</span>
           </li>
         </ol>
       </div>
@@ -23,8 +23,6 @@
 </template>
 
 <script>
-
-
 export default {
   data() {
     return {
@@ -32,19 +30,28 @@ export default {
       tasks: [],
     }
   },
-  created() {
+
+  mounted() {
     let storage = localStorage.getItem("taskStorage");
     if(storage) {
-     this.tasks = JSON.parse(storage)
+      this.tasks = JSON.parse(storage);
     }
-  },
+    this.$nextTick(function () {
+        this.mountedReady()
+    })
+    },
 
   methods: {
     addTask: function () {
-      this.tasks.push(this.task);
-      localStorage.setItem("taskStorage", JSON.stringify(this.tasks))
-      // localStorage.setItem(this.task, 'taskStorage')
-      this.task = "";
+      if(this.task) {
+        this.tasks.push({
+          name:this.task,
+          isEdit: false,
+        });
+        localStorage.setItem("taskStorage", JSON.stringify(this.tasks))
+        // localStorage.setItem(this.task, 'taskStorage')
+        this.task = "";
+      }
     },
 
     removeAllTasks: function () {
@@ -52,11 +59,33 @@ export default {
       localStorage.removeItem('taskStorage')
     },
 
+    readyTask: function(e) {
+      let element_task = e.target;
+     element_task.classList.toggle("decoration_text")
+      this.tasks = this.tasks.map((task) => {
+        if(task.name === element_task.innerHTML) {
+          task.isEdit = !task.isEdit;
+        }
+        return task;
+      })
+      localStorage.setItem("taskStorage", JSON.stringify(this.tasks))
+    },
+
+    mountedReady: function() {
+      let checklist_list_ul = document.querySelectorAll(".checklist_list_li_element")
+      for(let task of this.tasks) {
+        if(task.isEdit) {
+          for(let elem of checklist_list_ul) {
+            if(elem.innerHTML === task.name)
+              elem.classList.add("decoration_text")
+          }
+        }
+      }
+    }
   }
 
 }
 </script>
 
 <style>
-
 </style>
