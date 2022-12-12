@@ -14,7 +14,7 @@
       <div class="checklist_text">
       <textarea v-model="task" @keydown.enter.prevent.exact="addTask" class="checklist_text_textarea" placeholder="Сформировать задачу..."></textarea>
         <button @click="addTask" class="checklist_text_btn">Добавить задачу</button>
-        <button @click="removeAllTasks" class="checklist_text_btn">Отчистить весь список</button>
+        <button @click="removeAllTasks" class="checklist_text_btn">Очистить весь список</button>
       </div>
     </div>
   </div>
@@ -45,7 +45,7 @@ export default {
     addTask: function () {
       if(this.task) {
         this.tasks.push({
-          name:this.task,
+          name: this.addEndStr(this.task),
           isEdit: false,
         });
         localStorage.setItem("taskStorage", JSON.stringify(this.tasks))
@@ -81,6 +81,14 @@ export default {
           }
         }
       }
+    },
+
+    addEndStr: function(str) {
+      str = str.trim();
+      if(str.substr(str.length -1) !== "!") {
+       str = str.replace(/[.;:]$/g, '') + '!';
+      }
+      return str;
     }
   }
 
