@@ -5,15 +5,25 @@
         <h1 class="checklist_header_title">Список дел на сегодня!!!</h1>
       </div>
       <div class="checklist_list">
-        <ol class="checklist_list_ul" i-if="tasks">
-          <li class="checklist_list_li" v-for="(elem, index) in tasks" :key="index">
-            <span class="checklist_list_li_element"  @click="readyTask($event)">{{elem.name}}</span>
-          </li>
-        </ol>
+        <template v-if="statusChange">
+          <ol class="checklist_list_ul" i-if="tasks">
+            <li class="checklist_list_li" v-for="(elem, index) in tasks" :key="index">
+              <span class="checklist_list_li_element"  v-bind:class="{decoration_text: elem.isEdit}" @click="readyTask($event)">{{elem.name}}</span>
+            </li>
+          </ol>
+        </template>
+        <template v-else>
+          <ol class="checklist_list_ul" i-if="tasks">
+            <li class="checklist_list_li" v-for="(elem, index) in tasks" :key="index">
+              <input type="text" v-model="elem.name">
+            </li>
+          </ol>
+        </template>
       </div>
       <div class="checklist_text">
       <textarea v-model="task" @keydown.enter.prevent.exact="addTask" class="checklist_text_textarea" placeholder="Сформировать задачу..."></textarea>
         <button @click="addTask" class="checklist_text_btn">Добавить задачу</button>
+        <button class="checklist_text_btn" @click="changeTasks">{{nameBtnChange}}</button>
         <button @click="removeAllTasks" class="checklist_text_btn">Очистить весь список</button>
       </div>
     </div>
@@ -28,6 +38,8 @@ export default {
     return {
       task: "",
       tasks: [],
+      statusChange: true,
+      nameBtnChange: "Редактировать список",
     }
   },
 
@@ -36,9 +48,6 @@ export default {
     if(storage) {
       this.tasks = JSON.parse(storage);
     }
-    this.$nextTick(function () {
-        this.mountedReady()
-    })
     },
 
   methods: {
@@ -49,7 +58,6 @@ export default {
           isEdit: false,
         });
         localStorage.setItem("taskStorage", JSON.stringify(this.tasks))
-        // localStorage.setItem(this.task, 'taskStorage')
         this.task = "";
       }
     },
@@ -71,26 +79,27 @@ export default {
       localStorage.setItem("taskStorage", JSON.stringify(this.tasks))
     },
 
-    mountedReady: function() {
-      let checklist_list_ul = document.querySelectorAll(".checklist_list_li_element")
-      for(let task of this.tasks) {
-        if(task.isEdit) {
-          for(let elem of checklist_list_ul) {
-            if(elem.innerHTML === task.name)
-              elem.classList.add("decoration_text")
-          }
-        }
-      }
-    },
-
     addEndStr: function(str) {
       str = str.trim();
       if(str.substr(str.length -1) !== "!") {
        str = str.replace(/[.;:]$/g, '') + '!';
       }
       return str;
+    },
+
+    changeTasks: function() {
+      this.statusChange = !this.statusChange;
+      (this.statusChange) ? this.nameBtnChange = "Редактировать список" : this.nameBtnChange = "Cохранить изменения";
+      for(let elem of this.tasks) {
+        if(elem.name) {
+          elem.name = this.addEndStr(elem.name)
+        } else {
+          this.tasks = this.tasks.filter(i => i.name !== "")
+        }
+      }
+      localStorage.setItem("taskStorage", JSON.stringify(this.tasks))
     }
-  }
+  },
 
 }
 </script>
