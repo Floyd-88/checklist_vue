@@ -27,25 +27,11 @@ body {
 .checklist_header_title {
     font-size: 35px;
     font-style: italic;
-    color: mediumvioletred;
+    color: cornflowerblue;
 }
 
 .checklist_list {
 
-}
-
-.checklist_list_ul {
-
-}
-
-.checklist_list_li {
-    font-size: 21px;
-    margin: 7px;
-    font-style: italic;
-}
-
-.checklist_list_li_element {
-    cursor: pointer;
 }
 
 .checklist_text {
@@ -53,15 +39,4 @@ body {
     flex-direction: column;
 }
 
-.checklist_text_textarea {
-    width: 340px;
-    height: 70px;
-}
 
-.checklist_text_btn {
-    margin: 7px;
-}
-
-.decoration_text {
-    text-decoration: line-through;
-}
